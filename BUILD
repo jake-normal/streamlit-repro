@@ -10,6 +10,7 @@ pex_binary(
     args=["run", "main.py"],
     dependencies=["main.py:root"],
     execution_mode="venv",
+    layout="packed",
 )
 
 
@@ -20,6 +21,7 @@ pex_binary(
     args=["run", "main.py"],
     dependencies=["main.py:root"],
     execution_mode="venv",
+    layout="packed",
 )
 
 docker_image(
