@@ -1,0 +1,15 @@
+[GLOBAL]
+pants_version = "2.20.0"
+backend_packages = [
+    "pants.backend.python",
+    "pants.backend.docker",
+]
+
+[python]
+interpreter_constraints = ["==3.11.*"]
+enable_resolves = true
+
+[docker]
+use_buildx = true
+env_vars = ["DOCKER_DEFAULT_PLATFORM=linux/amd64"]
+build_args = ["HOME"]
