@@ -20,27 +20,14 @@ pex_binary(
     args=["run", "main.py"],
     dependencies=["main.py:root"],
     execution_mode="venv",
-    layout="packed",
-    include_tools=True,
 )
 
 docker_image(
     name="image",
     instructions=[
-        f"FROM {BASE_IMAGE} as deps",
-        "COPY py-bin.pex /py-bin.pex",
-        "RUN PEX_TOOLS=1 /usr/local/bin/python3.11 /py-bin.pex venv --scope=deps --compile /bin/app",
-
-        f"FROM {BASE_IMAGE} as srcs",
-        "COPY py-bin.pex /py-bin.pex",
-        "RUN PEX_TOOLS=1 /usr/local/bin/python3.11 /py-bin.pex venv --scope=srcs --compile /bin/app",
-
         f"FROM {BASE_IMAGE}",
-
-        'ENTRYPOINT ["/bin/app/pex"]',
-        "COPY --from=deps /bin/app /bin/app",
-        "COPY --from=srcs /bin/app /bin/app",
-
+        "COPY py-bin.pex /bin/app/py-bin.pex",
+        'ENTRYPOINT ["/bin/app/py-bin.pex"]',
         "EXPOSE 8080",
     ],
 )
